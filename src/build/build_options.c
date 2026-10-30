@@ -202,6 +202,7 @@ static void usage(bool full)
 		print_opt("--benchfn <name>", "Override the benchmark runner function name.");
 		PRINTF("");
 		print_opt("--reloc=<option>", "Relocation model: none, pic, PIC, pie, PIE.");
+		print_opt("--tls-model=<option>", "Thread local storage model: global-dynamic, local-dynamic, initial-exec, local-exec.");
 		print_opt("--cpu-flags <string>", "Add/remove cpu flags from the default, e.g. '+a,-b'.");
 		print_opt("--x86cpu=<option>", "Set general level of x64 cpu: baseline, ssse3, sse4, avx1, avx2-v1, avx2-v2 (Skylake/Zen1+), avx512 (Icelake/Zen4+), native.");
 		print_opt("--x86vec=<option>", "Set max type of vector use: none, mmx, sse, avx, avx512, default.");
@@ -1507,6 +1508,11 @@ static void parse_option(BuildOptions *options) // NOLINT
 				options->reloc_model = parse_opt_select(RelocModel, argopt, reloc_models);
 				return;
 			}
+			if ((argopt = match_argopt("tls-model"))) // NOLINT
+			{
+				options->tls_model = parse_opt_select(TlsModel, argopt, tls_models);
+				return;
+			}
 			if (match_longopt("about")) // NOLINT
 			{
 				PRINTF("The C3 Compiler");
@@ -2010,6 +2016,7 @@ BuildOptions parse_arguments(int argc, const char *argv[])
 		.build_threads = cpus(),
 		.command = COMMAND_MISSING,
 		.reloc_model = RELOC_DEFAULT,
+		.tls_model = TLS_MODEL_DEFAULT,
 #if LLVM_AVAILABLE
 		.backend = BACKEND_LLVM,
 #else

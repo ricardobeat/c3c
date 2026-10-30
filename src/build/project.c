@@ -59,6 +59,7 @@ const char *project_default_keys[][2] = {
 		{"panicfn", "Override the panic function."},
 		{"quiet", "Silence unnecessary output."},
 		{"reloc", "Relocation model: none, pic, PIC, pie, PIE."},
+		{"tls-model", "Thread local storage model: global-dynamic, local-dynamic, initial-exec, local-exec."},
 		{"riscv-abi", "RiscV ABI: int-only, float, double."},
 		{"riscv-cpu", "Set general level of RISC-V cpu: `rvi`, `rvimac`, `rvimafc`, `rvgc` or `rvgcv`."},
 		{"run-dir", "Override run directory for 'run'."},
@@ -165,6 +166,7 @@ const char* project_target_keys[][2] = {
 		{"template", "Use a template configuration from a library, format 'library/template'."},
 		{"quiet", "Silence unnecessary output."},
 		{"reloc", "Relocation model: none, pic, PIC, pie, PIE."},
+		{"tls-model", "Thread local storage model: global-dynamic, local-dynamic, initial-exec, local-exec."},
 		{"riscv-abi", "RiscV ABI: int-only, float, double."},
 		{"run-dir", "Override run directory for 'run'."},
 		{"safe", "Set safety (contracts, runtime bounds checking, null pointer checks etc) on or off."},
@@ -466,6 +468,10 @@ static void load_into_build_target(BuildParseContext context, JSONObject *json, 
 	// Reloc
 	RelocModel reloc = GET_SETTING(RelocModel, "reloc", reloc_models, "'none', 'pic', 'PIC', 'pie' or 'PIE'.");
 	if (reloc != RELOC_DEFAULT) target->reloc_model = reloc;
+
+	// TLS model
+	TlsModel tls_model = GET_SETTING(TlsModel, "tls-model", tls_models, "'global-dynamic', 'local-dynamic', 'initial-exec' or 'local-exec'.");
+	if (tls_model != TLS_MODEL_DEFAULT) target->tls_model = tls_model;
 
 	// Sanitize
 	SanitizeMode sanitize_mode = GET_SETTING(SanitizeMode, "sanitize", sanitize_modes, "'none', 'address', 'memory' or 'thread'.");
