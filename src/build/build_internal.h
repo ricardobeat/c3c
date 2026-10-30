@@ -188,6 +188,13 @@ static const char *reloc_models[5] = {
 	[RELOC_BIG_PIE] = "PIE",
 };
 
+static const char *tls_models[4] = {
+	[TLS_MODEL_GLOBAL_DYNAMIC] = "global-dynamic",
+	[TLS_MODEL_LOCAL_DYNAMIC] = "local-dynamic",
+	[TLS_MODEL_INITIAL_EXEC] = "initial-exec",
+	[TLS_MODEL_LOCAL_EXEC] = "local-exec",
+};
+
 static const char *sanitize_modes[4] = {
 	[SANITIZE_NONE] = "none",
 	[SANITIZE_ADDRESS] = "address",

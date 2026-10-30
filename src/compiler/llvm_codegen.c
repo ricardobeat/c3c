@@ -479,9 +479,25 @@ void llvm_set_global_tls(Decl *decl)
 {
 	if (!decl->var.is_threadlocal) return;
 	LLVMThreadLocalMode thread_local_mode = LLVMGeneralDynamicTLSModel;
-	if (!decl->var.is_addr && decl_is_local(decl))
+	switch (compiler.build.tls_model)
 	{
-		thread_local_mode = LLVMLocalDynamicTLSModel;
+		case TLS_MODEL_DEFAULT:
+			if (!decl->var.is_addr && decl_is_local(decl))
+			{
+				thread_local_mode = LLVMLocalDynamicTLSModel;
+			}
+			break;
+		case TLS_MODEL_GLOBAL_DYNAMIC:
+			break;
+		case TLS_MODEL_LOCAL_DYNAMIC:
+			thread_local_mode = LLVMLocalDynamicTLSModel;
+			break;
+		case TLS_MODEL_INITIAL_EXEC:
+			thread_local_mode = LLVMInitialExecTLSModel;
+			break;
+		case TLS_MODEL_LOCAL_EXEC:
+			thread_local_mode = LLVMLocalExecTLSModel;
+			break;
 	}
 	LLVMSetThreadLocal(decl->backend_ref, true);
 	LLVMSetThreadLocalMode(decl->backend_ref, thread_local_mode);

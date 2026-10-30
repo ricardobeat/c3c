@@ -320,6 +320,7 @@ typedef struct BuildOptions_
 	const char *script_dir;
 	const char **emit_only;
 	RelocModel reloc_model;
+	TlsModel tls_model;
 	X86VectorCapability x86_vector_capability;
 	X86CpuSet x86_cpu_set;
 	RiscvCpuSet riscv_cpu_set;
@@ -492,6 +493,7 @@ typedef struct
 	AutoVectorization loop_vectorization;
 	AutoVectorization slp_vectorization;
 	RelocModel reloc_model;
+	TlsModel tls_model;
 	ArchOsTarget arch_os_target;
 	CompilerBackend backend;
 	LinkerType linker_type;
@@ -622,6 +624,7 @@ static BuildTarget default_build_target = {
 		.strip_unused = STRIP_UNUSED_NOT_SET,
 		.symtab_size = DEFAULT_SYMTAB_SIZE,
 		.reloc_model = RELOC_DEFAULT,
+		.tls_model = TLS_MODEL_DEFAULT,
 		.cc = NULL,
 		.extension = NULL,
 		.version = "1.0.0",

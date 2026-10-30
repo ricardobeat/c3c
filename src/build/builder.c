@@ -591,6 +591,7 @@ BUILD:
 	set_if_updated(target->show_backtrace, options->show_backtrace);
 	set_if_updated(target->arch_os_target, options->arch_os_target_override);
 	set_if_updated(target->reloc_model, options->reloc_model);
+	set_if_updated(target->tls_model, options->tls_model);
 	set_if_updated(target->use_stdlib, options->use_stdlib);
 	set_if_updated(target->link_libc, options->link_libc);
 	set_if_updated(target->custom_libc, options->custom_libc);
